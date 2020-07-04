@@ -1,0 +1,63 @@
+#include<iostream>
+using namespace std;
+class node{
+	public:
+	int data;
+	node *next;
+
+	node(int d){
+		data=d;
+	}
+};
+void insert(node* &head,int data){
+    node *n=new node(data);
+    n->next=head;
+    head=n;
+}
+void printNodes(node* &head){
+	node *ptr=head;
+	while(ptr!=NULL){
+		cout<<ptr->data<<" ";
+		ptr=ptr->next;
+	}
+}
+int midPt(node *&head){
+	node *slow=head ,*fast=head;
+	while(fast->next!=NULL && fast->next->next!=NULL){
+		slow=slow->next;
+		fast=fast->next->next;
+	}
+
+	return (slow->data);
+}
+void reverse(node *&head){
+
+	node *prev=NULL, *cur=head, *nxt;
+	while(cur!=NULL){
+		
+		nxt=cur->next;
+		cur->next=prev;
+		prev=cur;
+		cur=nxt;
+		
+	 	//nxt=nxt->next;
+	}
+	head=prev;
+}
+
+int main(int argc, char const *argv[])
+{
+	node* head=NULL;
+    int n,N;
+    cin>>n;
+	for(int i=0;i<n;i++){
+        cin>>N;
+        insert(head,N);
+    }
+	printNodes(head);
+
+	reverse(head);
+	
+
+	return 0;
+}
