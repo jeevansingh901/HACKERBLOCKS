@@ -1,0 +1,34 @@
+#include <iostream>
+#include <queue>
+#include<functional>
+#include<vector>
+
+using namespace std;
+
+int main() {
+    int t,n=1,k,i;
+    long long d;    ///CHANGE. range exceeds integer range
+    long long sum=0;    ///CHANGE. Range of numbers exceeds integer range
+    cin>>t;
+    while (t--)
+    {
+        priority_queue<long long> pq;   ///CHANGE. range exceeds integer range
+        cin>>n>>k;
+        long long a[n]; ///CHANGE. range exceeds integer range
+        for (i=0;i<n;i++)
+        {
+            cin>>a[i];
+            pq.push(a[i]);
+        }
+        while (k--)
+        {
+            sum+=pq.top();
+            d=pq.top();
+            pq.pop();   ///CHANGE, First remove this.
+            pq.push(d/2);
+        }
+        cout<<sum<<endl;    ///CHANGE. endl missing
+        sum=0;
+    }
+    return 0;
+}
