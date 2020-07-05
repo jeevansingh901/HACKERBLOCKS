@@ -1,0 +1,124 @@
+#include <bits/stdc++.h>
+
+#define N 100
+
+using namespace std;
+
+int n;
+int a[N][N];
+int cnt = 0;
+int totalCongigutation = 0;
+vector<pair<int, int>>Move={{-1,-2}, {-2,-1}, {-2, 1}, {-1, 2}, {1, 2}, {2, 1}, {2, -1}, {1, -2}};
+
+void print(){
+    
+    for(int i = 0; i < n; i++){
+
+        for(int j = 0; j < n; j++){
+            
+            if(a[i][j]){
+                cout<<"{"<<i<<"-"<<j<<"}"<<" ";
+            }
+            ///cout<<a[i][j]<<" ";
+        }
+        ///cout<<endl;
+    }
+    cout<<" ";
+}
+
+/*
+void block(int i, int j){
+
+    for(int k = 0; k < 8; k++){
+
+        if(i+Move[k].first >= n || i+Move[k].first < 0 || j+Move[k].second >=n || j+Move[k].second < 0){
+
+            continue;
+        }
+
+        a[i+Move[k].first][j+Move[k].second] = 1;
+    }
+}
+*/
+
+bool isSafe(int i, int j){
+
+    for(int k = 0; k < 8; k++){
+
+        if(i+Move[k].first >= n || i+Move[k].first < 0 || j+Move[k].second >=n || j+Move[k].second < 0){
+
+            continue;
+        }
+
+        if(a[i+Move[k].first][j+Move[k].second] == 1){
+
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool solve(int cnt, int i, int j){
+
+    if(cnt > n){
+
+        return false;
+    }
+
+    if(i >= n){
+
+        return false;
+    }
+    if(cnt == n){
+
+        totalCongigutation++;
+        print();
+        /*
+        if(j >= n){
+
+            return solve(cnt-1, i+1, 0);
+        }
+        */
+        return false;
+    }
+
+    if(j >= n){
+
+        return solve(cnt, i+1, 0);
+    }
+
+    ///for(int j = 0; j < n; j++){
+
+        if(isSafe(i, j)){
+
+            a[i][j] = 1;
+
+            bool isplace = solve(cnt+1, i, j+1);
+
+            if(isplace){
+
+                return true;
+            }
+            a[i][j] = 0;
+        }
+
+        ///this line is crucial for printing configutation
+        ///else{
+            return solve(cnt, i, j+1);
+        ///}
+    //}
+
+    return false;
+}
+
+int main()
+{
+    cin>>n;
+
+    memset(a, 0, sizeof(a));
+    solve(0, 0, 0);
+    cout<<endl;
+    cout<<totalCongigutation<<endl;
+    return 0;
+}
